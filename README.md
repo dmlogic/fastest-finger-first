@@ -1,4 +1,4 @@
-# Fastest Finder First
+# Fastest Finger First
 
 This project allows some [cheap buzzers](https://www.amazon.co.uk/dp/B0DG5W91QW) to be adapted to run via a PI which will listen for the clicks and only allow the "fastest finger" to light up and sound the buzzer.
 
