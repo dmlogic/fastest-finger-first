@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web Page</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello, World!</h1>
+        <p>This is a simple web page served by Python.</p>
+        <p id="status">Status: Disconnected</p>
+        <p id="counter">Counter: 0</p>
+        <button id="resetBtn">Reset</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io();
+        const ready = false;
+        socket.on('connect', function() {
+            document.getElementById('status').innerText = 'Status: Connected';
+            socket.emit('my event', {data: 'I\'m connected!'});
+        });
+        socket.on('my response', function(msg) {
+            console.log(msg.data);
+        });
+        socket.on('counter_update', function(msg) {
+            document.getElementById('counter').innerText = 'Counter: ' + msg.count;
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            fetch('/reset', {method: 'POST'})
+                .then(response => console.log('Reset successful'))
+                .catch(error => console.error('Error resetting:', error));
+        });
+    </script>
+</body>
+</html>

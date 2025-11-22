@@ -1,0 +1,13 @@
+[Unit]
+Description=Fastest Finger First Server
+After=network.target
+
+[Service]
+User=darren
+WorkingDirectory=/home/pi/fastest-finger-first
+Environment="PATH=/home/pi/fastest-finger-first/venv/bin"
+ExecStart=/home/pi/fastest-finger-first/venv/bin/gunicorn --worker-class eventlet -w 1 --bind 127.0.0.1:8000 server:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
